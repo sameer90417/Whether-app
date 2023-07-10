@@ -1,24 +1,34 @@
-import logo from './logo.svg';
+import Whether from './Components/Whether';
 import './App.css';
+import {Routes, Route} from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
 function App() {
+
+
+  const endpoint = "https://api.weatherapi.com/v1/current.json?key=db836a51dd7245469af51140230707&q=30.7035229,76.67861111313437";
+  const [data, setdata] = useState({});
+
+  useEffect(
+    () => {
+      getData();
+    }
+  )
+
+  function getData(){
+    fetch(endpoint) 
+    .then((resp) => resp.json())
+    .then((data) => setdata(data))
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      
+      <Routes>
+        <Route exact path="/" element={<Whether data={data}/>} />
+      </Routes>
+      
+    </>
   );
 }
 
